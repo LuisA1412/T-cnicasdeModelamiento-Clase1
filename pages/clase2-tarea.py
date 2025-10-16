@@ -2,9 +2,9 @@ import dash
 from dash import html, dcc, Input, Output, State, callback
 import numpy as np
 import plotly.graph_objects as go
-from utils.funciones import func_graficar_ecu_log
+from utils.funciones import func_graficar_ecu_gompertz
 
-dash.register_page(__name__, path='/pagina3', name='Página 3')
+dash.register_page(__name__, path='/pagina4', name='Página 4')
 
 
 ## Layout de la página ##
@@ -15,18 +15,18 @@ layout = html.Div(children=[
         html.H2("Parámetros del Modelo", className="title"),
 
         html.Div([
-            html.Label("Población Inicial P(0):"),
-            dcc.Input(id="input-p0", type="number", value=200, className="input-field"),
+            html.Label("Número Inicial de Células P(0):"),
+            dcc.Input(id="input-p0", type="number", value=1, className="input-field"),
         ], className="input-group"),
 
         html.Div([
             html.Label("Tasa de Crecimiento (r):"),
-            dcc.Input(id="input-r", type="number", value=0.04, step=0.01 ,className="input-field"),
+            dcc.Input(id="input-r", type="number", value=0.1, step=0.01 ,className="input-field"),
         ], className="input-group"),
 
         html.Div([
             html.Label("Capacidad de Carga (K): "),
-            dcc.Input(id="input-k", type="number", value=750, className="input-field"),
+            dcc.Input(id="input-k", type="number", value=10e6, step = 10e5, className="input-field"),
         ], className="input-group"),
 
         html.Div([
@@ -42,7 +42,7 @@ layout = html.Div(children=[
         html.H2("Gáfica", className="title"),
 
         dcc.Graph(
-            id = 'grafica-poblacion-2',
+            id = 'grafica-poblacion',
             style={'height':'350px','width':'100%'},
         )
     ], className="content right")
@@ -52,7 +52,7 @@ layout = html.Div(children=[
 ## Callbacks ##
 
 @callback(
-    Output('grafica-poblacion-2', 'figure'),
+    Output('grafica-poblacion', 'figure'),
     Input('btn-generar', 'n_clicks'),
     State('input-p0', 'value'),
     State('input-r', 'value'),
@@ -64,6 +64,6 @@ layout = html.Div(children=[
 
 def actualizar_grafica(n_clicks, P0, r, K, t_max):
     
-    fig = func_graficar_ecu_log(P0, r, K, t_max)
+    fig = func_graficar_ecu_gompertz(P0, r, K, t_max)
     return fig
  
