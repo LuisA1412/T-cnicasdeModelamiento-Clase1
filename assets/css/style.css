@@ -1,10 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
+/* Inicio */
+.hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    margin: 50px 0;
+    margin-bottom: 100px;
+    gap: 40px;
+}
+
+.hero-section .text {
+    flex: 5;
+}
+
+.hero-section .text h2 {
+    font-size: 45px;
+}
+
+.hero-section .headshot {
+    background-color: wheat;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 2;
+    display: flex;
+    justify-content: right;
+}
+
+.hero-section .headshot img {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+}
+
+/* Clases */
+
 body {
+    max-width: 1400px;
     font-family: Outfit;
     background-color: rgb(255, 255, 255);
     margin: 0;
     padding: 0;
+    align-content: center;
 }
 
 .app-container{
@@ -108,6 +147,14 @@ a {
     background-color: darkblue;
 }
 
+
+@media (max-width: 850px) {
+    /* SECTION 1: Hero */
+    .hero-section .text h2 {
+        font-size: 35px;
+    }
+}
+
 @media (max-width: 740px) {
     .page-container{
         flex-direction: column;
@@ -116,5 +163,26 @@ a {
     .content.left,
     .content.right{
         width: 96%;
+    }
+
+    /* SECTION 1: Hero */
+    .hero-section {
+        flex-direction: column-reverse;
+    }
+
+    .hero-section .headshot img {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    /* SECTION 1: Hero */
+    .hero-section {
+        padding: 0 20px;
+    }
+
+    .hero-section .text h2 {
+        font-size: 30px;
     }
 }
