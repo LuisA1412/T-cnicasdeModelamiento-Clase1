@@ -4,11 +4,11 @@ import numpy as np
 import plotly.graph_objs as go
 from scipy.integrate import odeint
 
-dash.register_page(__name__, path='/pagina6', name='Modelo SIR')
+dash.register_page(__name__, path='/pagina7', name='Modelo SEIR')
 
 layout = html.Div([
     html.Div([
-        html.H2("Modelo SIR - Epidemiología", className="title"),
+        html.H2("Modelo SEIR - Epidemiología", className="title"),
 
         html.Div([
             html.Label("Población Total (N): "),
@@ -17,7 +17,12 @@ layout = html.Div([
 
         html.Div([
             html.Label("Tasa de transmisión (β): "),
-            dcc.Input(id='input-beta', type='number', value=0.3, step=0.01, className="input-field"),
+            dcc.Input(id='input-beta', type='number', value=0.5, step=0.01, className="input-field"),
+        ], className="input-group"),
+
+        html.Div([
+            html.Label("Tasa de incubación (σ): "),
+            dcc.Input(id='input-sigma', type='number', value=0.2, step=0.01, className="input-field"),
         ], className="input-group"),
 
         html.Div([
@@ -42,48 +47,53 @@ layout = html.Div([
     html.Div([
         html.H2("Evolución de la Epidemia", className="title"),
         dcc.Graph(
-            id='grafica-sir',
+            id='grafica-seir',
             style={'height':'450px','width':'100%'},
         ),
     ], className="content right"),
 
 ],className="page-container")
 
-#Modelo SIR
+#Modelo SEIR
 
-def modelo_sir(y, t, beta, gamma, N):
-    S, I, R = y
+def modelo_seir(y, t, beta, sigma, gamma, N):
+    S, E , I, R = y
 
     dS_dt = -beta * S * I / N
-    dI_dt = beta * S * I /N - gamma * I     
+    dE_dt = beta * S * I / N - sigma * E
+    dI_dt = sigma * E - gamma * I     
     dR_dt = gamma * I     
 
-    return [dS_dt, dI_dt, dR_dt]
+    return [dS_dt, dE_dt, dI_dt, dR_dt]
 
 #Callback para actualizar la gráfica
 
 @callback(
-    Output('grafica-sir', 'figure'),
+    Output('grafica-seir', 'figure'),
     Input('btn-simular', 'n_clicks'),
     State('input-N', 'value'),
     State('input-beta', 'value'),
+    State('input-sigma', 'value'),
     State('input-gamma', 'value'),
     State('input-I0', 'value'),
     State('input-tiempo', 'value'),
     prevent_initial_call=False
 )
-def simular_sir(n_clicks, N, beta, gamma, I0, tiempo_max):
+
+def simular_seir(n_clicks, N, beta, sigma, gamma, I0, tiempo_max):
     S0 = N - I0
+    E0_inicial = 0
     R0_inicial = 0
-    y0 = [S0, I0, R0_inicial]
+    y0 = [S0, E0_inicial , I0, R0_inicial]
 
     t = np.linspace(0, tiempo_max, 200)
 
     try: 
-        solucion = odeint(modelo_sir, y0, t, args=(beta, gamma, N))
-        S, I, R = solucion.T
+        solucion = odeint(modelo_seir, y0, t, args=(beta, sigma, gamma, N))
+        S, E, I, R = solucion.T
     except Exception as e:
         S = np.full_like(t, S0)
+        E = np.full_like(t, E0_inicial)
         I = np.full_like(t, I0)
         R = np.full_like(t, R0_inicial)
 
@@ -95,6 +105,15 @@ def simular_sir(n_clicks, N, beta, gamma, I0, tiempo_max):
         name='Susceptibles (S)', 
         line=dict(color='blue', width=2),
         hovertemplate='Día %{x:.0f}<br>Susceptibles: %{y:.0f}<extra></extra>'
+        )
+    )
+
+    fig.add_trace(go.Scatter(
+        x=t, y=E,
+        mode='lines',
+        name='Infectados (I)',  
+        line=dict(color='yellow', width=2),
+        hovertemplate='Día %{x:.0f}<br>Expuestos: %{y:.0f}<extra></extra>'
         )
     )
     
@@ -118,9 +137,8 @@ def simular_sir(n_clicks, N, beta, gamma, I0, tiempo_max):
     
     fig.update_layout(
         title=dict(
-            text = "<b>Evolución del Modelo SIR</b>",
-            x = 0.5, 
-            font=dict(size=16, color='darkblue') 
+            text = "<b>Evolución del Modelo SEIR</b>",
+            x = 0.2, font=dict(size=16, color='darkblue') 
         ),
         xaxis_title="tiempo (días)",
         yaxis_title="Número de personas",
@@ -130,9 +148,9 @@ def simular_sir(n_clicks, N, beta, gamma, I0, tiempo_max):
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.0,
+            y=1.02,
             xanchor="right",
-            x=0.6
+            x=0.5
         ),
         margin=dict(l=40, r=40, t=60, b=40),
     )  
