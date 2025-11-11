@@ -111,7 +111,7 @@ def simular_seir(n_clicks, N, beta, sigma, gamma, I0, tiempo_max):
     fig.add_trace(go.Scatter(
         x=t, y=E,
         mode='lines',
-        name='Infectados (I)',  
+        name='Expuestos (E)',  
         line=dict(color='yellow', width=2),
         hovertemplate='Día %{x:.0f}<br>Expuestos: %{y:.0f}<extra></extra>'
         )
