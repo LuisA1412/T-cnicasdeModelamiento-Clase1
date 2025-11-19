@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 /* Inicio */
+
 .hero-section {
     display: flex;
     justify-content: space-between;
@@ -35,6 +36,7 @@
     border-radius: 50%;
 }
 
+
 /* Clases */
 
 body {
@@ -45,11 +47,11 @@ body {
     padding: 0;
 }
 
-.app-container{
+.app-container {
     padding: 0;
 }
 
-.app-header{
+.app-header {
     margin: 0;
     background-color: blue;
     padding: 10px;
@@ -57,22 +59,21 @@ body {
     color: white;
 }
 
-.navigation{
+.navigation {
     background-color: blue;
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
 }
 
-.nav-link{
+.nav-link {
     background-color: chartreuse;
     padding: 2px 8px;
     border-radius: 5px;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     background-color: yellow;
-
 }
 
 a {
@@ -80,21 +81,22 @@ a {
     color: black;
 }
 
-.nav-links{
+.nav-links {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
     padding: 10px;
 }
 
-.page-container{
+.page-container {
     margin-left: 10px;
     margin-right: 10px;
     display: flex;
     gap: 10px;
 }
 
-.content{
+.content {
     background-color: wheat;
     border-radius: 8px;
     padding: 10px;
@@ -102,22 +104,23 @@ a {
 }
 
 .content.left,
-.content.right{
+.content.right {
     width: 50%;
 }
 
-.title{
+.title {
     text-align: center;
     margin-top: 0;
 }
 
+
 /*Estilos página 2*/
 
-.input-group{
+.input-group {
     margin-bottom: 15px;
 }
 
-.input-group label{
+.input-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
@@ -131,7 +134,7 @@ a {
     border-radius: 8px;
 }
 
-.btn-generar{
+.btn-generar {
     background-color: blue;
     color: white;
     border: none;
@@ -141,10 +144,9 @@ a {
     width: 100%;
 }
 
-.btn-generar:hover{
+.btn-generar:hover {
     background-color: darkblue;
 }
-
 
 @media (max-width: 850px) {
     /* SECTION 1: Hero */
@@ -154,20 +156,17 @@ a {
 }
 
 @media (max-width: 740px) {
-    .page-container{
+    .page-container {
         flex-direction: column;
     }
-
     .content.left,
-    .content.right{
+    .content.right {
         width: 96%;
     }
-
     /* SECTION 1: Hero */
     .hero-section {
         flex-direction: column-reverse;
     }
-
     .hero-section .headshot img {
         width: 300px;
         height: 300px;
@@ -179,7 +178,6 @@ a {
     .hero-section {
         padding: 0 20px;
     }
-
     .hero-section .text h2 {
         font-size: 30px;
     }
