@@ -250,6 +250,16 @@ def simular_sistema_hibrido(n_clicks, r, K, alpha, tau1, tau2, beta, omega, mu, 
         margin=dict(l=40, r=40, t=60, b=40),
     )
 
+    fig_tiempo.update_xaxes(
+        showgrid=True, gridwidth=1, gridcolor='lightpink', 
+        zeroline=True, zerolinewidth= 2,zerolinecolor='black',
+    )
+
+    fig_tiempo.update_yaxes(
+        showgrid=True, gridwidth=1, gridcolor='lightpink', 
+        zeroline=True, zerolinewidth= 2,zerolinecolor='black',
+    )
+
     # --- GRÁFICA 2: PLANO DE FASE ---
     fig_fase = go.Figure()
     
@@ -318,6 +328,16 @@ def simular_sistema_hibrido(n_clicks, r, K, alpha, tau1, tau2, beta, omega, mu, 
         xaxis=dict(range=[0, K+1]),
         yaxis=dict(range=[0, max(B_history)*1.1]),
         margin=dict(l=40, r=40, t=60, b=40),
+    )
+
+    fig_fase.update_xaxes(
+        showgrid=True, gridwidth=1, gridcolor='lightpink', 
+        zeroline=True, zerolinewidth= 2,zerolinecolor='black',
+    )
+
+    fig_fase.update_yaxes(
+        showgrid=True, gridwidth=1, gridcolor='lightpink', 
+        zeroline=True, zerolinewidth= 2,zerolinecolor='black',
     )
 
     return fig_tiempo, fig_fase
