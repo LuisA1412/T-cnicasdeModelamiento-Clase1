@@ -47,17 +47,17 @@ layout = html.Div([
 
         html.Div([
             html.Label("Presas iniciales (A0): "),
-            dcc.Input(id='input-A0', type='number', value=10, className="input-field"),
+            dcc.Input(id='input-A0', type='number', value=4, className="input-field"),
         ], className="input-group"),
 
         html.Div([
             html.Label("Depredadores iniciales (B0): "),
-            dcc.Input(id='input-B0', type='number', value=5, className="input-field"),
+            dcc.Input(id='input-B0', type='number', value=1, className="input-field"),
         ], className="input-group"),
 
         html.Div([
             html.Label("Tiempo de simulación (días): "),
-            dcc.Input(id='input-tiempo', type='number', value=100, className="input-field"),
+            dcc.Input(id='input-tiempo', type='number', value=250, className="input-field"),
         ], className="input-group"),
 
         html.Button("Simular Epidemia", id='btn-simular', className="btn-generar"),
@@ -79,8 +79,8 @@ layout = html.Div([
 def modelo_rumor(y, t, r, K, alpha, tau1, tau2, beta, omega):
     A, B  = y
 
-    dA_dt = r*A*(1-(A/K)**alpha) - (tau1 * A**2 * B)/(A**2 + B)
-    dB_dt = ((tau2 * A**2)/(A**2 + beta) - omega) * B       
+    dA_dt = r*A*(1 - (A/K)**alpha) - tau1*(A**2/(A**2 + beta))*B
+    dB_dt = (tau2*(A**2/(A**2 + beta)) - omega)*B      
 
     return [dA_dt, dB_dt]
 
