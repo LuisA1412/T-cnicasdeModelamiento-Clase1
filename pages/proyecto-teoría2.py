@@ -209,8 +209,22 @@ def simular_sistema_hibrido(n_clicks, r, K, alpha, tau1, tau2, beta, omega, mu, 
 
     # --- GRÁFICA 1: SERIES DE TIEMPO ---
     fig_tiempo = go.Figure()
-    fig_tiempo.add_trace(go.Scatter(x=t_history, y=A_history, name='Presas (A)', line=dict(color='blue')))
-    fig_tiempo.add_trace(go.Scatter(x=t_history, y=B_history, name='Depredadores (B)', line=dict(color='red')))
+    fig_tiempo.add_trace(go.Scatter(
+        x=t_history, 
+        y=A_history, 
+        name='Presas (A)', 
+        line=dict(color='blue'),
+        hovertemplate='tiempo %{x:.0f}<br>Presas: %{y:.2f}<extra></extra>'
+        )
+    )
+    fig_tiempo.add_trace(go.Scatter(
+        x=t_history, 
+        y=B_history, 
+        name='Depredadores (B)', 
+        line=dict(color='red'),
+        hovertemplate='tiempo %{x:.0f}<br>Depredadores: %{y:.2f}<extra></extra>'
+        )
+    )
     
     # Línea del umbral (aproximada, solo conceptual si B fuera constante, difícil de dibujar fija en t)
     # Pero podemos añadir una línea horizontal de referencia si mu=1 (solo depende de A)
@@ -240,7 +254,15 @@ def simular_sistema_hibrido(n_clicks, r, K, alpha, tau1, tau2, beta, omega, mu, 
     fig_fase = go.Figure()
     
     # Trayectoria
-    fig_fase.add_trace(go.Scatter(x=A_history, y=B_history, mode='lines', name='Trayectoria', line=dict(color='green')))
+    fig_fase.add_trace(go.Scatter(
+        x=A_history, 
+        y=B_history, 
+        mode='lines', 
+        name='Trayectoria', 
+        line=dict(color='green'),
+        hovertemplate='Presas %{x:.2f}<br>Depredadores: %{y:.2f}<extra></extra>'
+        )
+    )
     
     # Dibujar la Línea de Impulso (M) y la Línea de Fase (N)
     # M: mu*A + (1-mu)*B = I  =>  B = (I - mu*A) / (1-mu)
@@ -254,8 +276,22 @@ def simular_sistema_hibrido(n_clicks, r, K, alpha, tau1, tau2, beta, omega, mu, 
         C_const = I + ((1-mu)*Lambda)/(1 - c2*h)
         B_N = (C_const - (mu * A_range)/(1 - c1*h)) * ((1 - c2*h)/(1 - mu))
         
-        fig_fase.add_trace(go.Scatter(x=A_range, y=B_M, name='C. Pulso (M)', line=dict(dash='dash', color='orange')))
-        fig_fase.add_trace(go.Scatter(x=A_range, y=B_N, name='C. Fase (N)', line=dict(dash='dot', color='purple')))
+        fig_fase.add_trace(go.Scatter(
+            x=A_range, 
+            y=B_M, 
+            name='C. Pulso (M)', 
+            line=dict(dash='dash', color='orange'),
+            hovertemplate='Presas %{x:.2f}<br>Depredadores: %{y:.2f}<extra></extra>'
+            )
+        )
+        fig_fase.add_trace(go.Scatter(
+            x=A_range, 
+            y=B_N, 
+            name='C. Fase (N)', 
+            line=dict(dash='dot', color='purple'),
+            hovertemplate='Presas %{x:.2f}<br>Depredadores: %{y:.2f}<extra></extra>'
+            )
+        )
     else:
         # Si mu=1, las líneas son verticales A = I y A = I(1-c1h)
         fig_fase.add_vline(x=I, line_dash="dash", line_color="orange", annotation_text="M")
