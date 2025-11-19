@@ -137,7 +137,7 @@ def simular_sir(n_clicks, r, K, alpha, tau1, tau2, beta, omega, A0, B0, tiempo_m
         x=A, y=B,
         mode='lines',
         name='Todo (C)',  
-        line=dict(color='red', width=2),
+        line=dict(color='green', width=2),
         hovertemplate='Día %{x:.0f}<br>Todo: %{y:.0f}<extra></extra>'
         )
     )
