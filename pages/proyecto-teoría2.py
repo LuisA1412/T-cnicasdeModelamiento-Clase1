@@ -78,6 +78,7 @@ layout = html.Div([
         html.Hr(),
 
         # --- CONDICIONES INICIALES ---
+        html.H4("Valores Iniciales"),
         html.Div([
             html.Div([
                 html.Label("A0:"), 
@@ -253,8 +254,8 @@ def simular_sistema_hibrido(n_clicks, r, K, alpha, tau1, tau2, beta, omega, mu, 
         C_const = I + ((1-mu)*Lambda)/(1 - c2*h)
         B_N = (C_const - (mu * A_range)/(1 - c1*h)) * ((1 - c2*h)/(1 - mu))
         
-        fig_fase.add_trace(go.Scatter(x=A_range, y=B_M, name='Conjunto de Impulso (M)', line=dict(dash='dash', color='orange')))
-        fig_fase.add_trace(go.Scatter(x=A_range, y=B_N, name='Conjunto de Fase (N)', line=dict(dash='dot', color='purple')))
+        fig_fase.add_trace(go.Scatter(x=A_range, y=B_M, name='C. Pulso (M)', line=dict(dash='dash', color='orange')))
+        fig_fase.add_trace(go.Scatter(x=A_range, y=B_N, name='C. Fase (N)', line=dict(dash='dot', color='purple')))
     else:
         # Si mu=1, las líneas son verticales A = I y A = I(1-c1h)
         fig_fase.add_vline(x=I, line_dash="dash", line_color="orange", annotation_text="M")
